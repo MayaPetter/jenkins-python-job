@@ -1,0 +1,43 @@
+services:
+  jenkins_controller:
+#  FIXME
+#    build: .
+#    image: jenkins/jenkins:2.392-jdk11
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+    networks:
+      - inner
+      - external
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    configs:
+      - httpd-config
+    secrets:
+      - server-certificate
+
+#  jenkins-python-agent:
+##    image: TODO
+#    volumes:
+#      - jenkins_agent_home:/etc/data
+#    networks:
+#      - inner
+
+volumes:
+  jenkins_home:
+  jenkins_agent_home:
+#    driver: flocker
+#    driver_opts:
+#      size: "10GiB"
+
+#configs:
+#  httpd-config:
+#    external: true
+
+secrets:
+  server-certificate:
+    external: true
+
+networks:
+  inner: {}
+  external: {}
