@@ -41,3 +41,32 @@ secrets:
 networks:
   inner: {}
   external: {}
+
+#docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+  ssh-agent:
+    image: jenkins/ssh-agent
+volumes:
+  jenkins_home:
+
+
+version: "3"
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+    environment:
+      - JENKINS_OPTS=--httpPort=-1 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/certificates/jenkins.crt --httpsPrivateKey=/var/jenkins_home/certificates/jenkins.key
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - ./jenkins-ssl:/var/jenkins_home/certificates
+volumes:
+  jenkins-data:

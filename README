@@ -1,3 +1,22 @@
 All the system should be run as a container, using a single command from cli. == docker-compose
 running Jenkins server, that will initiate a python job
 on any merge request. == PR
+
+phase 2:
+Setting the number of executors
+You can define the number of executors on the Jenkins built-in node using a groovy script. By default it is set to 2 executors, but you can extend the image and change it to your desired number of executors (recommended 0 executors on the built-in node) :
+
+executors.groovy
+
+import jenkins.model.*
+Jenkins.instance.setNumExecutors(0) // Recommended to not run builds on the built-in node
+and Dockerfile
+
+FROM jenkins/jenkins:lts
+COPY --chown=jenkins:jenkins executors.groovy /usr/share/jenkins/ref/init.groovy.d/executors.groovy
+Connecting agents
+You can run builds on the controller out of the box. The Jenkins project recommends that no executors be enabled on the controller.
+
+In order to connect agents through an inbound TCP connection, map the port: -p 50000:50000. That port will be used when you connect agents to the controller.
+
+If you are only using SSH (outbound) build agents, this port is not required, as connections are established from the controller. If you connect agents using web sockets (since Jenkins 2.217), the TCP agent port is not used either.
