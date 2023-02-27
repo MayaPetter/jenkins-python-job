@@ -9,7 +9,11 @@ properties([
 timestamps {
     // node(nodeLabel) {
     node {
-        checkout scm
-        sh "python3 main.py"
+        stage('checkout'){
+            checkout scm
+        }
+        stage('describe DevOps'){
+            sh "python3 main.py"
+        }
     }
  }
