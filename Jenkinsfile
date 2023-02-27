@@ -1,7 +1,8 @@
 properties([
     buildDiscarder(logRotator(numToKeepStr: '5')),
     disableConcurrentBuilds(),
-    [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/MayaPetter/jenkins-python-job/'],
+    [$class: 'GithubProjectProperty', projectUrlStr: REPO_URL],
+//     [$class: 'GithubProjectProperty', projectUrlStr: 'https://github.com/MayaPetter/jenkins-python-job/'],
     pipelineTriggers([[$class: 'PeriodicFolderTrigger', interval: '1d']])
 ])
 
