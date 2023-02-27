@@ -11,9 +11,10 @@ Few issues:
    Jenkins is configured to listen to events from $REPO_URL 
    The remote repo should be configured to send events to the Jenkins server via webhook, 
    post-commit script or an app - depending on the Git provider.
-   Couldn't find a way to configer the webhook automatically, tho I'm sure there is one.
+   Didn't had much time to investigate how to configure the webhook automatically, 
+   although I'm sure there is one.
    
    For a webhook, the Jenkins server should have public IP- need to use a utility such as ngrok.
          
-3. Still didn't configure SSL/TLS certificate for HTTPS connection to jenkins.
+3. I would add an SSL/TLS certificate for HTTPS connection to jenkins.
 4. I would add users authentication and Metrix-based security in Jenkins
