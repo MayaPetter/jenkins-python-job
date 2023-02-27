@@ -1,4 +1,3 @@
-// FIXME
 properties([
     buildDiscarder(logRotator(numToKeepStr: '5')),
     disableConcurrentBuilds(),
@@ -10,12 +9,11 @@ properties([
 timestamps {
     // node(nodeLabel) {
     node {
-        sh '''
-            python3 -m venv .venv
-            . .venv/bin/activate
-//             pip3 install -r requirements.txt
-            python3 main.py
-        '''
-
+        stage('checkout'){
+            checkout scm
+        }
+        stage('describe DevOps'){
+            sh "python3 main.py"
+        }
     }
  }

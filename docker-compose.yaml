@@ -1,72 +1,28 @@
+version: '3.9'
 services:
-  jenkins_controller:
-#  FIXME
-#    build: .
-#    image: jenkins/jenkins:2.392-jdk11
+  jenkins:
+#    image: jenkins-python
+    build:
+      context: .
+    container_name: jenkins
+    restart: always
     ports:
-      - "8080:8080"
-      - "5000:5000"
-    networks:
-      - inner
-      - external
+      # - 8443:8443
+      - 8080:8080
+      - 50000:50000
+    # environment:
+    #  - JENKINS_OPTS="--httpPort=8080 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/cert/jenkins.crt --httpsPrivateKey=/var/jenkins_home/cert/jenkins.key"
     volumes:
-      - jenkins_home:/var/jenkins_home
-    configs:
-      - httpd-config
-    secrets:
-      - server-certificate
-
-#  jenkins-python-agent:
-##    image: TODO
-#    volumes:
-#      - jenkins_agent_home:/etc/data
-#    networks:
-#      - inner
-
-volumes:
-  jenkins_home:
-  jenkins_agent_home:
-#    driver: flocker
-#    driver_opts:
-#      size: "10GiB"
-
-#configs:
-#  httpd-config:
-#    external: true
-
-secrets:
-  server-certificate:
-    external: true
+     - jenkins_home:/var/jenkins_home
+     - jenkins-ssl:/var/jenkins_home/certificates
+    networks:
+     - jenkins-network
 
 networks:
-  inner: {}
-  external: {}
-
-#docker run -p 8080:8080 -p 50000:50000 --restart=on-failure -v jenkins_home:/var/jenkins_home jenkins/jenkins:lts-jdk11
-services:
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports:
-      - "8080:8080"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-  ssh-agent:
-    image: jenkins/ssh-agent
+  jenkins-network:
+    driver: bridge
 volumes:
-  jenkins_home:
-
-
-version: "3"
-services:
-  jenkins:
-    image: jenkins/jenkins:lts
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-    environment:
-      - JENKINS_OPTS=--httpPort=-1 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/certificates/jenkins.crt --httpsPrivateKey=/var/jenkins_home/certificates/jenkins.key
-    volumes:
-      - jenkins-data:/var/jenkins_home
-      - ./jenkins-ssl:/var/jenkins_home/certificates
-volumes:
-  jenkins-data:
+ jenkins_home:
+    name: jenkins_home
+ jenkins-ssl:
+    name: jenkins-ssl
