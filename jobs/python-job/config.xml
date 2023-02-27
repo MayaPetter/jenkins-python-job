@@ -25,7 +25,7 @@
       <abortPrevious>false</abortPrevious>
     </org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.37.0">
-      <projectUrl>https://github.com/MayaPetter/jenkins-python-job/</projectUrl>
+      <projectUrl>REPO_URL</projectUrl>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
       <triggers>
@@ -40,7 +40,7 @@
     <script>properties([
     buildDiscarder(logRotator(numToKeepStr: &apos;5&apos;)),
     disableConcurrentBuilds(),
-    [$class: &apos;GithubProjectProperty&apos;, projectUrlStr: &apos;https://github.com/MayaPetter/jenkins-python-job/&apos;],
+    [$class: &apos;GithubProjectProperty&apos;, projectUrlStr: &apos;REPO_URL&apos;],
     pipelineTriggers([[$class: &apos;PeriodicFolderTrigger&apos;, interval: &apos;1d&apos;]])
 ])
 

@@ -29,7 +29,7 @@
       <jenkins.branch.BranchSource>
         <source class="jenkins.plugins.git.GitSCMSource" plugin="git@5.0.0">
           <id>d44ead64-f6dd-4217-be1d-138f37a7da22</id>
-          <remote>https://github.com/MayaPetter/jenkins-python-job.git</remote>
+          <remote>REPO_URL.git</remote>
           <credentialsId></credentialsId>
           <traits>
             <jenkins.plugins.git.traits.BranchDiscoveryTrait/>

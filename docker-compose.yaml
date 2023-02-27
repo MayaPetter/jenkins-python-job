@@ -1,28 +1,35 @@
-version: '3.9'
+version: "3.8"
 services:
+
   jenkins:
-#    image: jenkins-python
     build:
       context: .
     container_name: jenkins
     restart: always
     ports:
-      # - 8443:8443
+#      - 8443:8443
       - 8080:8080
       - 50000:50000
-    # environment:
-    #  - JENKINS_OPTS="--httpPort=8080 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/cert/jenkins.crt --httpsPrivateKey=/var/jenkins_home/cert/jenkins.key"
+#    environment:
+#      REPO_URL: "$$REPO_URL"
+#      - JENKINS_OPTS="--httpPort=8080 --httpsPort=8443 --httpsCertificate=/var/jenkins_home/cert/jenkins.crt --httpsPrivateKey=/var/jenkins_home/cert/jenkins.key"
     volumes:
-     - jenkins_home:/var/jenkins_home
-     - jenkins-ssl:/var/jenkins_home/certificates
-    networks:
-     - jenkins-network
+     - ./jenkins_home:/var/jenkins_home
+     - ./jenkins-ssl:/var/jenkins_home/certificates
 
-networks:
-  jenkins-network:
-    driver: bridge
-volumes:
- jenkins_home:
-    name: jenkins_home
- jenkins-ssl:
-    name: jenkins-ssl
+#  ngrok:
+#    image: shkoliar/ngrok:latest
+#    ports:
+#      - 4551:4551
+#    links:
+#      - jenkins
+#    environment:
+#      - DOMAIN=jenkins
+#      - PORT=80
+#networks:
+#  jenkins:
+#    driver: bridge
+
+#volumes:
+# jenkins_home:
+# jenkins-ssl:
